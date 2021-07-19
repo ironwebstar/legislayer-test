@@ -37,7 +37,8 @@ export const actions: ActionTree<RootState, any> = {
       const profiles = await getProfiles({ results: loadingResults, gender });
       // const curProfiles = mergeProfiles(profiles.results, ctx.state.profiles);
 
-      ctx.commit("SET_PROFILES", [...ctx.state.profiles, ...profiles.results]);
+      ctx.commit("SET_PROFILES", [...profiles.results]);
+      return profiles.results;
     } catch (error) {
       if (process.env.NODE_ENV !== "production") {
         console.error("ERROR: NO PROFILE DATA");

@@ -62,7 +62,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import debounce from "debounce";
 import { Getter, Mutation, Action } from "vuex-class";
 import Component from "vue-class-component";
 import { Watch } from "vue-property-decorator";
@@ -87,6 +86,7 @@ export default class Home extends Vue {
 
   search = "";
   filteredProfiles: Profile[] = [];
+  debounceInput: any = null;
   infiniteId = +new Date();
 
   @Watch("profiles")
@@ -104,25 +104,25 @@ export default class Home extends Vue {
   }
 
   infiniteHandler(): void {
-    this.loadProfiles({ results: LOADING_ITEMS });
+    this.searchProfile();
   }
 
   async searchHandle(): Promise<void> {
     this.setProfiles([]);
-    debounce(async () => {
-      if (this.search) await this.searchProfile();
+    clearTimeout(this.debounceInput);
+
+    this.debounceInput = setTimeout(async () => {
+      await this.searchProfile();
     }, 500);
   }
 
   async searchProfile(): Promise<void> {
     const search = this.search.toLowerCase();
 
-    if (this.profiles.length < LOADING_ITEMS) {
-      await this.loadProfiles({ results: LOADING_ITEMS });
-    }
+    const profiles = await this.loadProfiles({ results: LOADING_ITEMS });
 
     if (search) {
-      const filtered = await this.profiles.filter(
+      const filtered = await profiles.filter(
         (profile: Profile) =>
           profile.name.first.toLowerCase().includes(search) ||
           profile.name.last.toLowerCase().includes(search)
@@ -130,6 +130,8 @@ export default class Home extends Vue {
       if (filtered.length > LOADING_ITEMS) filtered.length = LOADING_ITEMS;
 
       this.filteredProfiles = filtered;
+    } else {
+      this.filteredProfiles = profiles;
     }
   }
 
