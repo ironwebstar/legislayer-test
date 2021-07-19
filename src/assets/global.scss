@@ -1,0 +1,12 @@
+@import "./theme/normalize";
+@import "./theme/variables";
+
+p {
+  margin: $spacing * 0.25 0;
+}
+
+.ellpsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

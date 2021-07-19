@@ -1,6 +1,9 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
+
 import Home from "../views/Home.vue";
+import Store from "../store";
+import { PROFILES, LOADING_ITEMS } from "../constants";
 
 Vue.use(VueRouter);
 
@@ -9,15 +12,28 @@ const routes: Array<RouteConfig> = [
     path: "/",
     name: "Home",
     component: Home,
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    async beforeEnter(to, from, next) {
+      try {
+        console.log(
+          "routeing",
+          localStorage.getItem(PROFILES)
+            ? JSON.parse(localStorage.getItem(PROFILES) || "")
+            : []
+        );
+        if (!localStorage.getItem(PROFILES))
+          await Store.dispatch("LOAD_PROFILES", { results: LOADING_ITEMS });
+        else
+          Store.commit(
+            "SET_PROFILES",
+            localStorage.getItem(PROFILES)
+              ? JSON.parse(localStorage.getItem(PROFILES) || "")
+              : []
+          );
+        next();
+      } catch (error) {
+        // TODO: Error Handling
+      }
+    },
   },
 ];
 
