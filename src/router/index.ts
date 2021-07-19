@@ -14,21 +14,16 @@ const routes: Array<RouteConfig> = [
     component: Home,
     async beforeEnter(to, from, next) {
       try {
-        console.log(
-          "routeing",
-          localStorage.getItem(PROFILES)
-            ? JSON.parse(localStorage.getItem(PROFILES) || "")
-            : []
-        );
         if (!localStorage.getItem(PROFILES))
           await Store.dispatch("LOAD_PROFILES", { results: LOADING_ITEMS });
-        else
-          Store.commit(
-            "SET_PROFILES",
-            localStorage.getItem(PROFILES)
-              ? JSON.parse(localStorage.getItem(PROFILES) || "")
-              : []
-          );
+        else {
+          const localProfiles = localStorage.getItem(PROFILES)
+            ? JSON.parse(localStorage.getItem(PROFILES) || "")
+            : [];
+          if (localProfiles.length > LOADING_ITEMS)
+            localProfiles.length = LOADING_ITEMS;
+          Store.commit("SET_PROFILES", localProfiles);
+        }
         next();
       } catch (error) {
         // TODO: Error Handling

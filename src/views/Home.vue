@@ -62,10 +62,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+import debounce from "debounce";
 import { Getter, Mutation, Action } from "vuex-class";
 import Component from "vue-class-component";
 import { Watch } from "vue-property-decorator";
-import { Debounce } from "vue-debounce-decorator";
 import InfiniteLoading from "vue-infinite-loading";
 
 import ProfileItem from "../components/ProfileItem.vue";
@@ -89,6 +89,11 @@ export default class Home extends Vue {
   filteredProfiles: Profile[] = [];
   infiniteId = +new Date();
 
+  @Watch("profiles")
+  onProfilesChange(): void {
+    this.filteredProfiles = this.profiles;
+  }
+
   created(): void {
     this.filteredProfiles = this.profiles;
     this.setCurProfile(
@@ -102,9 +107,11 @@ export default class Home extends Vue {
     this.loadProfiles({ results: LOADING_ITEMS });
   }
 
-  @Debounce(500)
   async searchHandle(): Promise<void> {
-    if (this.search) await this.searchProfile();
+    this.setProfiles([]);
+    debounce(async () => {
+      if (this.search) await this.searchProfile();
+    }, 500);
   }
 
   async searchProfile(): Promise<void> {
@@ -144,11 +151,6 @@ export default class Home extends Vue {
       return `${location.timezone.description} ${location.timezone.offset}`;
     }
     return "";
-  }
-
-  @Watch("profiles")
-  onProfilesChange(): void {
-    this.filteredProfiles = this.profiles;
   }
 }
 </script>

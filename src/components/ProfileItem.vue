@@ -3,10 +3,7 @@
     class="profile-item"
     :class="{
       'profile-item__selected':
-        curProfile &&
-        curProfile &&
-        profile.id &&
-        profile.id.value === curProfile.id.value,
+        curProfile && profile.email === curProfile.email,
     }"
   >
     <div v-if="profile.picture" class="profile-image">

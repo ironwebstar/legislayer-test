@@ -50,7 +50,6 @@ export const actions: ActionTree<RootState, any> = {
 export const mutations: MutationTree<RootState> = {
   SET_PROFILES(state: RootState, profiles: Profile[]) {
     state.profiles = [...profiles];
-    console.log(profiles);
     localStorage.setItem(PROFILES, JSON.stringify(state.profiles));
   },
 

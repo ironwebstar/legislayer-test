@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home snapshot 1`] = `
+"<div class=\\"home\\">
+  <div class=\\"search\\">
+    <div class=\\"search-input\\"><input></div>
+    <div class=\\"search-list\\">
+      <profile-item-stub profile=\\"[object Object]\\"></profile-item-stub>
+      <profile-item-stub profile=\\"[object Object]\\"></profile-item-stub>
+      <profile-item-stub profile=\\"[object Object]\\"></profile-item-stub>
+      <profile-item-stub profile=\\"[object Object]\\"></profile-item-stub>
+      <profile-item-stub profile=\\"[object Object]\\"></profile-item-stub>
+      <infinite-loading-stub distance=\\"100\\" direction=\\"bottom\\" identifier=\\"1626681263264\\"></infinite-loading-stub>
+    </div>
+  </div>
+  <div class=\\"profile\\">
+    <div>
+      <div class=\\"current-profile\\">
+        <div class=\\"current-profile-top\\">
+          <avatar-stub image=\\"https://randomuser.me/api/portraits/thumb/men/2.jpg\\" width=\\"100\\" height=\\"100\\"></avatar-stub>
+          <div class=\\"current-profile-top-content\\">
+            <div class=\\"current-profile-name\\">
+              Mr. Herman Warren
+            </div>
+            <p class=\\"current-profile-username\\">
+              @heavyelephant650
+            </p> <a href=\\"mailto:herman.warren@example.com\\" class=\\"current-profile-email\\">
+              Email: herman.warren@example.com
+            </a> <a href=\\"tel:081-891-1455\\" class=\\"current-profile-cell\\">
+              Phone: 081-891-1455
+            </a>
+          </div>
+        </div>
+        <div class=\\"current-profile-bottom\\">
+          <p><b>Location:</b> Mill Lane 2958, Swords, Galway, Ireland</p>
+          <p><b>Timezone:</b> Almaty, Dhaka, Colombo +6:00</p>
+          <p><b>Birthday:</b> 24</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>"
+`;

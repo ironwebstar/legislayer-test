@@ -1,7 +1,7 @@
 export interface Profile {
   id: {
     name: string;
-    value: string;
+    value: string | null;
   };
   gender: string;
   name: {
@@ -17,7 +17,7 @@ export interface Profile {
     city: string;
     country: string;
     state: string;
-    postcode: string;
+    postcode: number | string;
     coordinates: {
       latitude: string;
       longitude: string;
